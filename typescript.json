@@ -1,0 +1,16 @@
+{
+	"filter": {
+		"body": [
+			"result = firstArray.filter(o => secondArray.some(({id,name}) => o.id === id && o.name === name));"
+		],
+		"description": "Filters two arrays to find commonalities",
+		"prefix": "filter"
+	},
+	"fill": {
+		"body": [
+			"arrayName.fill(itemToFill, startingPositionZeroBased)"
+		],
+		"description": "Populates an array with the number of fill items",
+		"prefix": "fill"
+	}
+}
