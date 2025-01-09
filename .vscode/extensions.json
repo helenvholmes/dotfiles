@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "ahmadawais.shades-of-purple",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-syntax",
+    "pkief.material-icon-theme",
+    "styled-components.vscode-styled-components",
+    "vscodevim.vim"
+  ]
+}
