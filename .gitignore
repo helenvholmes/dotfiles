@@ -1,50 +1,52 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # Commenting this out only because the intention of this repo is to expose these sorts of files for other use
+# Local VSCode settings
 # .vscode
 
-# dependencies
+# Dependencies
 /node_modules
 /studio/node_modules
 /.pnp
 .pnp.js
 
-# testing
+# Testing
 /coverage
 
-# next.js
+# Next.js
 /.next/
 /out/
 
-# production
+# Production for Sanity UI
 /build
 /studio/dist
 
-# misc
+# Misc Mac stuff
 .DS_Store
 *.pem
 
-# debug
+# Debug bugs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
+# Storybook logs
+*storybook.log
+
+# Local .env files
 .env*.local
 
-# vercel
+# Vercel
 .vercel
 
 # IntelliJ
 .idea
 *.iml
 
-# typescript
+# Typescript
 *.tsbuildinfo
 
 # Env files created by scripts for working locally
 .env
 studio/.env.development
-
-*storybook.log
