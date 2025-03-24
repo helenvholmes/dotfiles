@@ -4,6 +4,7 @@
     "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
     "dsznajder.es7-react-js-snippets",
+    "eamodio.gitlens",
     "esbenp.prettier-vscode",
     "formulahendry.auto-rename-tag",
     "graphql.vscode-graphql",
@@ -11,6 +12,5 @@
     "pkief.material-icon-theme",
     "styled-components.vscode-styled-components",
     "vscodevim.vim",
-    "waderyan.gitblame"
   ]
 }
