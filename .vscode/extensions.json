@@ -10,6 +10,7 @@
     "graphql.vscode-graphql-syntax",
     "pkief.material-icon-theme",
     "styled-components.vscode-styled-components",
-    "vscodevim.vim"
+    "vscodevim.vim",
+    "waderyan.gitblame"
   ]
 }
