@@ -33,6 +33,7 @@ link() {
 link zsh/.zprofile                    "$HOME/.zprofile"
 link zsh/.zshrc                       "$HOME/.zshrc"
 link starship/starship.toml           "$HOME/.config/starship.toml"
+link starship/starship-plain.toml     "$HOME/.config/starship-plain.toml"
 link iterm/Pastel.json                "$HOME/Library/Application Support/iTerm2/DynamicProfiles/Pastel.json"
 link git/.gitconfig                   "$HOME/.gitconfig"
 link git/ignore                       "$HOME/.config/git/ignore"

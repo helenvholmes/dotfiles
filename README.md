@@ -11,6 +11,7 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `claude/mods/pastel/` | A Claude mod: the Pastel look (dark violet, pink accent) for the whole Claude app, terminal pane included | installed once with `claude plugin` (see below) |
 | `.claude-plugin/marketplace.json` | Makes this repo a plugin source, so Claude can install the mods in `claude/mods/` | read by `claude plugin` |
 | `starship/starship.toml` | Prompt theme ("little icons") | `~/.config/starship.toml` (symlinked) |
+| `starship/starship-plain.toml` | The same prompt with plain Unicode symbols, for the Claude app's terminal, which can't load the Nerd Font | `~/.config/starship-plain.toml` (symlinked) |
 | `git/.gitconfig` | Git settings: commit signing through 1Password, pull/push defaults, sign-in through `gh` | `~/.gitconfig` (symlinked) |
 | `git/ignore` | Ignores for every repo (`.DS_Store`, `.env`, keys, Claude's local files) | `~/.config/git/ignore` (symlinked) |
 | `ssh/config` | SSH settings: use 1Password's agent (keys stay on the machine, never in this repo) | `~/.ssh/config` (symlinked) |
