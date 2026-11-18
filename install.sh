@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-# Symlinks these dotfiles into place. Existing files are moved to <file>.backup.<timestamp>.
+# Sets up a Mac from this repo. Always symlinks the dotfiles into place (anything already
+# there is moved to <file>.backup.<timestamp>), then optionally installs Homebrew packages
+# and apps. Safe to run again.
 #
-#   ./install.sh               link dotfiles
-#   ./install.sh --extensions  also install VS Code extensions
-#   ./install.sh --brew        also run `brew bundle`
+#   ./install.sh                     asks what to install (a menu)
+#   ./install.sh --link              only link the dotfiles, no questions
+#   ./install.sh --brew              also install Brewfile (tools and shared apps)
+#   ./install.sh --work              …plus Brewfile.work (implies --brew)
+#   ./install.sh --personal          …plus Brewfile.personal (implies --brew)
+#   ./install.sh --extensions        also install VS Code extensions
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
@@ -42,19 +47,70 @@ touch "$HOME/.hushlogin"  # an empty ~/.hushlogin hides "Last login: …" in new
 
 [ -f "$HOME/.zshrc.local" ] || echo "note: no ~/.zshrc.local yet — put secrets and machine-specific exports there"
 
-for arg in "$@"; do
-  case "$arg" in
-    --extensions)
-      code="$(command -v code || echo "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")"
-      sed -n 's/^ *"\([^"]*\.[^"]*\)",\{0,1\}$/\1/p' "$DOTFILES/vscode/extensions.json" |
-        while read -r ext; do "$code" --install-extension "$ext"; done
-      ;;
-    --brew)
-      brew bundle --file="$DOTFILES/Brewfile"
-      ;;
-    *)
-      echo "unknown option: $arg" >&2
-      exit 1
-      ;;
-  esac
-done
+# ── What to install ─────────────────────────────────────────────────────────
+brew=false work=false personal=false extensions=false
+
+ask_yes() {  # ask_yes "Question" default(y/n) → returns 0 for yes
+  local reply hint="[y/N]"; [ "$2" = y ] && hint="[Y/n]"
+  read -r -p "$1 $hint " reply
+  reply="${reply:-$2}"
+  [[ "$reply" =~ ^[Yy] ]]
+}
+
+if [ $# -eq 0 ] && [ -t 0 ]; then
+  echo
+  if ask_yes "Install Homebrew tools and apps?" y; then
+    brew=true
+    echo
+    echo "What kind of Mac is this?"
+    echo "  1) Personal   shared apps + Brewfile.personal"
+    echo "  2) Work       shared apps + Brewfile.work"
+    echo "  3) Both       shared apps + both"
+    echo "  4) Neither    shared tools and apps only"
+    while :; do
+      read -r -p "Choose 1-4: " kind
+      case "$kind" in
+        1) personal=true; break ;;
+        2) work=true; break ;;
+        3) personal=true; work=true; break ;;
+        4) break ;;
+        *) echo "Type 1, 2, 3 or 4." ;;
+      esac
+    done
+  fi
+  echo
+  ask_yes "Install VS Code extensions?" n && extensions=true
+else
+  for arg in "$@"; do
+    case "$arg" in
+      --link) ;;
+      --brew) brew=true ;;
+      --work) brew=true; work=true ;;
+      --personal) brew=true; personal=true ;;
+      --extensions) extensions=true ;;
+      *) echo "unknown option: $arg (see the top of install.sh)" >&2; exit 1 ;;
+    esac
+  done
+fi
+
+# ── Homebrew ────────────────────────────────────────────────────────────────
+if $brew; then
+  # Turso's formula needs sqld from libSQL's tap, and Homebrew won't install from a
+  # third-party tap until it's trusted. It's Turso's own project; trusted on purpose.
+  brew tap libsql/sqld && brew trust libsql/sqld
+  files=(Brewfile)
+  $work && files+=(Brewfile.work)
+  $personal && files+=(Brewfile.personal)
+  for f in "${files[@]}"; do
+    echo; echo "── brew bundle: $f"
+    brew bundle --file="$DOTFILES/$f" || echo "note: some of $f didn't install; run it again or check the messages above"
+  done
+  command -v corepack >/dev/null && corepack enable pnpm  # pnpm through Corepack, see Brewfile
+fi
+
+# ── VS Code extensions ──────────────────────────────────────────────────────
+if $extensions; then
+  code="$(command -v code || echo "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")"
+  sed -n 's/^ *"\([^"]*\.[^"]*\)",\{0,1\}$/\1/p' "$DOTFILES/vscode/extensions.json" |
+    while read -r ext; do "$code" --install-extension "$ext"; done
+fi
