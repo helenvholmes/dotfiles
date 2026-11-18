@@ -26,8 +26,6 @@ brew "fnm"
 brew "http-server"
 # Port scanning utility for large networks
 brew "nmap"
-# Object-relational database system
-brew "postgresql@14", restart_service: :changed
 # Ruby version manager
 brew "rbenv"
 # Search tool like grep and The Silver Searcher
@@ -73,8 +71,6 @@ cask "zoom"
 cask "1password"
 
 # ── System add-ons ──────────────────────────────────────────────────────────
-# File system integration
-cask "macfuse"
 # Nerd Font icons only, used by the Starship prompt alongside Monaco
 cask "font-symbols-only-nerd-font"
 
