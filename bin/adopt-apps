@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Hands apps you installed by hand over to Homebrew, so `brew bundle` and `brew upgrade`
+# know about them. Run it once on a Mac set up before the Brewfile listed its apps.
+#
+#   bin/adopt-apps                      adopt apps from Brewfile, Brewfile.work and Brewfile.personal
+#   bin/adopt-apps Brewfile.personal    only the apps in the Brewfiles you name
+#   bin/adopt-apps --force [files…]     for apps that couldn't be adopted, install Homebrew's copy
+#                                       over yours (an update; settings live in ~/Library and are kept)
+#
+# Asks for your password once: Homebrew changes each app's group to admin with sudo.
+set -uo pipefail
+
+DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
+force=false
+[ "${1:-}" = "--force" ] && { force=true; shift; }
+files=("$@")
+[ ${#files[@]} -eq 0 ] && files=(Brewfile Brewfile.work Brewfile.personal)
+
+installed="$(brew list --cask)"
+casks=$(for f in "${files[@]}"; do grep -oE '^cask "[^"]+"' "$DOTFILES/${f##*/}" | cut -d'"' -f2; done)
+
+sudo -v || exit 1   # ask for the password up front; sudo remembers it for a few minutes
+
+adopted=() failed=()
+for cask in $casks; do
+  grep -qxF "$cask" <<<"$installed" && continue
+  echo "── $cask"
+  if $force; then
+    brew install --cask --force "$cask" && adopted+=("$cask") || failed+=("$cask")
+  elif brew install --cask --adopt "$cask"; then
+    adopted+=("$cask")
+  else
+    failed+=("$cask")
+  fi
+done
+
+echo
+echo "Now managed by Homebrew: ${adopted[*]:-none}"
+if [ ${#failed[@]} -gt 0 ]; then
+  echo "Couldn't adopt: ${failed[*]}"
+  echo "Usually that's a version mismatch. Update them with: bin/adopt-apps --force"
+fi

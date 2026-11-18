@@ -1,12 +1,19 @@
+# Brewfile — everything every Mac gets: command-line tools, the shell setup and the apps
+# I use on any machine. Apps for one kind of Mac live in Brewfile.work and
+# Brewfile.personal; ./install.sh asks which to add.
+#
+# Apps were installed by hand on the Mac this repo came from, so there they're adopted
+# once with `bin/adopt-apps` (asks for your password). Most apps update themselves, and
+# `brew upgrade` leaves those alone.
+
+# ── Command-line tools ──────────────────────────────────────────────────────
 tap "homebrew/services"
-# Turso's own taps. On a new Mac, run `brew trust libsql/sqld` first: Homebrew
-# won't install from a third-party tap until you say you trust it.
+# Turso's own taps. Homebrew won't install from a third-party tap until it's trusted;
+# install.sh runs `brew trust libsql/sqld` before `brew bundle`.
 tap "libsql/sqld"
 tap "tursodatabase/tap"
 # Cross-platform make
 brew "cmake"
-# SDL2 compatibility layer that uses SDL3 behind the scenes
-brew "sdl2-compat"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # GitHub command-line tool
@@ -15,26 +22,12 @@ brew "gh"
 brew "git"
 # Fast Node version manager (stands in for nvm)
 brew "fnm"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
 # Simple zero-configuration command-line HTTP server
 brew "http-server"
-# C library of Git core methods that is re-entrant and linkable
-brew "libgit2@1.6"
-# Implementation of the file(1) command
-brew "libmagic"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Port scanning utility for large networks
 brew "nmap"
-# Create, run, and share large language models (LLMs)
-brew "ollama"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1"
 # Object-relational database system
 brew "postgresql@14", restart_service: :changed
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Ruby version manager
 brew "rbenv"
 # Search tool like grep and The Silver Searcher
@@ -49,6 +42,8 @@ brew "starship"
 brew "uv"
 # Turso CLI (libSQL databases); brings sqld, the local database server, with it
 brew "tursodatabase/tap/turso"
+# Installs App Store apps from the Brewfile (`mas` lines below)
+brew "mas"
 # Internet file retriever
 brew "wget"
 # Feature-rich command-line audio/video downloader
@@ -57,16 +52,39 @@ brew "yt-dlp"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+
+# ── Apps ────────────────────────────────────────────────────────────────────
+# Browsers
+cask "brave-browser"
+cask "firefox"
+cask "google-chrome"
+# Code and AI
+cask "claude"
+cask "cursor"
+cask "iterm2"
+# Design and notes
+cask "figma"
+cask "notion"
+# Work and chat (on every Mac)
+cask "airtable"
+cask "slack"
+cask "zoom"
+# Passwords
+cask "1password"
+
+# ── System add-ons ──────────────────────────────────────────────────────────
 # File system integration
 cask "macfuse"
 # Nerd Font icons only, used by the Starship prompt alongside Monaco
 cask "font-symbols-only-nerd-font"
-# Spotify and iTunes in the menu bar
-cask "spotmenu"
-# Android File Transfer for Linux
-cask "whoozle-android-file-transfer"
+
+# ── Global npm packages ─────────────────────────────────────────────────────
+# Installed into fnm's default Node (run `brew bundle` from a shell where fnm is set up).
+# pnpm comes from Corepack, which ships with Node: `corepack enable pnpm`.
 npm "@qwen-code/qwen-code"
-npm "corepack"
-npm "eslint"
-npm "gatsby"
 npm "npm-check-updates"
+npm "vercel"
+
+# ── App Store ───────────────────────────────────────────────────────────────
+# Installed with mas from my App Store account (sign in to the App Store first).
+mas "Amphetamine", id: 937984704

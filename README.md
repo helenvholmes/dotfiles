@@ -16,7 +16,9 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `vscode/settings.json` | VS Code user settings | `~/Library/Application Support/Code/User/` (symlinked) |
 | `vscode/snippets/` | VS Code user snippets for TS and TSX | `…/Code/User/snippets/` (symlinked) |
 | `vscode/extensions.json` | VS Code extensions I use | installed with `./install.sh --extensions` |
-| `Brewfile` | Homebrew formulae, casks and global npm packages | installed with `./install.sh --brew` |
+| `Brewfile` | What every Mac gets: command-line tools, shared apps, global npm packages, App Store apps | installed by `./install.sh` |
+| `Brewfile.work` / `Brewfile.personal` | Apps for a work Mac or my own Mac | `./install.sh` asks which to add |
+| `bin/adopt-apps` | Hands apps installed by hand over to Homebrew, so `brew bundle` knows about them | run once on an existing Mac |
 | `templates/nextjs/` | `.gitignore`, `.prettierrc`, `tsconfig.json` and `.vscode/settings.json` for a new Next.js project | copy into the project by hand |
 
 ## Install
@@ -28,9 +30,10 @@ After installing, make the **Pastel** profile iTerm's default: Settings → Prof
 ```sh
 git clone https://github.com/helenvholmes/dotfiles ~/code/dotfiles
 cd ~/code/dotfiles
-./install.sh                       # symlink the dotfiles
-./install.sh --brew --extensions   # also install Homebrew packages and VS Code extensions
+./install.sh                       # links the dotfiles, then asks what to install
 ```
+
+The menu asks whether to install Homebrew tools and apps, what kind of Mac this is (personal, work, both, or neither: shared apps only), and whether to install VS Code extensions. To skip the questions, pass flags instead: `--link` (only link), `--brew`, `--work`, `--personal`, `--extensions`.
 
 Any file that's already in the way gets moved to `<file>.backup.<timestamp>` before it's linked, and running the script again is safe. Because everything is symlinked, edits made in place (for example through VS Code's settings UI) show up here as changes to commit.
 
@@ -51,8 +54,12 @@ The `.prettierrc` there needs `prettier-plugin-tailwindcss` installed in the pro
 export OPENAI_API_KEY="..."
 ```
 
-## Updating the Brewfile
+## Updating the Brewfiles
+
+Add new things by hand to whichever Brewfile fits (`brew bundle dump` would merge all three into one). To see what's installed but not listed anywhere:
 
 ```sh
-brew bundle dump --no-vscode --force --file=~/code/dotfiles/Brewfile
+cd ~/code/dotfiles && cat Brewfile Brewfile.work Brewfile.personal | brew bundle cleanup --file=-
 ```
+
+That only lists them; it removes nothing unless you add `--force`.

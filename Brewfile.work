@@ -1,0 +1,7 @@
+# Brewfile.work — apps for a work Mac, on top of Brewfile.
+# ./install.sh adds this when you pick "Work" or "Both".
+
+cask "loom"
+
+# App Store
+mas "Okta Verify", id: 490179405
