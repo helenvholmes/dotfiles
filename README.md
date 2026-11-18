@@ -8,6 +8,8 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `zsh/.zprofile` | PATH and environment: Homebrew, rbenv, fnm, `~/.local/bin`. Also read by GUI apps, so editors and AI tools find the same `node` and `python` | `~/.zprofile` (symlinked) |
 | `zsh/.zshrc` | Interactive shell: completion, history, shortcuts, prompt | `~/.zshrc` (symlinked) |
 | `iterm/Pastel.json` | iTerm profile: dark violet background, pastel cursor, Nerd Font icons | `…/iTerm2/DynamicProfiles/` (symlinked) |
+| `claude/mods/pastel/` | A Claude mod: the Pastel look (dark violet, pink accent) for the whole Claude app, terminal pane included | installed once with `claude plugin` (see below) |
+| `.claude-plugin/marketplace.json` | Makes this repo a plugin source, so Claude can install the mods in `claude/mods/` | read by `claude plugin` |
 | `starship/starship.toml` | Prompt theme ("little icons") | `~/.config/starship.toml` (symlinked) |
 | `git/.gitconfig` | Git settings: commit signing through 1Password, pull/push defaults, sign-in through `gh` | `~/.gitconfig` (symlinked) |
 | `git/ignore` | Ignores for every repo (`.DS_Store`, `.env`, keys, Claude's local files) | `~/.config/git/ignore` (symlinked) |
@@ -44,6 +46,17 @@ cp -R ~/code/dotfiles/templates/nextjs/. path/to/project/
 ```
 
 The `.prettierrc` there needs `prettier-plugin-tailwindcss` installed in the project.
+
+## Claude's Pastel look
+
+The same colors as the iTerm profile and the prompt, for the Claude app (its terminal pane too). Install it once per Mac, from a shell:
+
+```sh
+claude plugin marketplace add ~/code/dotfiles
+claude plugin install pastel@dotfiles --scope user
+```
+
+Or from anywhere, without cloning this repo first: `/plugin install pastel --marketplace helenvholmes/dotfiles` at a Claude Code prompt. To turn it off: `claude plugin disable pastel@dotfiles`. The colors live in `claude/mods/pastel/hooks/register.ts`; edits there apply to new sessions.
 
 ## Secrets and machine-specific config
 
