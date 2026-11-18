@@ -32,6 +32,7 @@ link iterm/Pastel.json                "$HOME/Library/Application Support/iTerm2/
 link git/.gitconfig                   "$HOME/.gitconfig"
 link git/ignore                       "$HOME/.config/git/ignore"
 link git/allowed_signers              "$HOME/.config/git/allowed_signers"
+link ssh/config                       "$HOME/.ssh/config"
 link vscode/settings.json             "$VSCODE_USER/settings.json"
 link vscode/snippets/typescript.json      "$VSCODE_USER/snippets/typescript.json"
 link vscode/snippets/typescriptreact.json "$VSCODE_USER/snippets/typescriptreact.json"
