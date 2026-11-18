@@ -17,7 +17,6 @@ cask "signal"
 # Media and reading
 cask "audacity"
 cask "calibre"
-cask "qbittorrent"
 cask "spotify"
 cask "vlc"
 # Kindle and Android file transfer
@@ -27,7 +26,6 @@ cask "swiftbar"
 # Games and emulators
 cask "crossover"
 cask "dolphin"
-cask "openemu"
 cask "pcsx2"
 cask "steam"
 
@@ -39,3 +37,6 @@ mas "iA Presenter", id: 6746414429
 mas "iA Writer", id: 775737590
 mas "Keynote", id: 409183694
 mas "Mela", id: 1568924476
+
+# Not here on purpose: qBittorrent and OpenEmu. Homebrew disabled both casks in
+# Sept 2026 because they fail Apple's Gatekeeper check; install them by hand.
