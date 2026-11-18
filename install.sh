@@ -25,14 +25,19 @@ link() {
   echo "linked          $dest"
 }
 
+link zsh/.zprofile                    "$HOME/.zprofile"
 link zsh/.zshrc                       "$HOME/.zshrc"
+link starship/starship.toml           "$HOME/.config/starship.toml"
+link iterm/Pastel.json                "$HOME/Library/Application Support/iTerm2/DynamicProfiles/Pastel.json"
 link git/.gitconfig                   "$HOME/.gitconfig"
 link git/.gitignore_global            "$HOME/.gitignore_global"
 link vscode/settings.json             "$VSCODE_USER/settings.json"
 link vscode/snippets/typescript.json      "$VSCODE_USER/snippets/typescript.json"
 link vscode/snippets/typescriptreact.json "$VSCODE_USER/snippets/typescriptreact.json"
 
-[ -d "$HOME/.oh-my-zsh" ] || echo "note: oh-my-zsh is not installed — see https://ohmyz.sh"
+command -v starship >/dev/null || echo "note: run ./install.sh --brew for starship, fnm and the zsh add-ons"
+touch "$HOME/.hushlogin"  # an empty ~/.hushlogin hides "Last login: …" in new terminal windows
+
 [ -f "$HOME/.zshrc.local" ] || echo "note: no ~/.zshrc.local yet — put secrets and machine-specific exports there"
 
 for arg in "$@"; do

@@ -1,0 +1,63 @@
+# Starship prompt: "little icons". Docs: https://starship.rs/config/
+# Icons need a Nerd Font. In iTerm: Settings → Profiles → Text → "Use a different font
+# for non-ASCII text" → Symbols Nerd Font Mono.
+#
+# Reads as:  󰉊 dotfiles on  main [!] via  v22.23.5 took 3s
+#            󰋑
+
+format = """${custom.flower}$directory$git_branch$git_status$nodejs$python$cmd_duration
+$character"""
+
+add_newline = true
+
+palette = "pastel"
+
+[palettes.pastel]
+pink = "#ED93B1"
+lavender = "#AFA9EC"
+gray = "#888780"
+amber = "#EF9F27"
+green = "#97C459"
+coral = "#F09595"
+
+# The flower at the start of the line
+[custom.flower]
+command = "echo 󰉊"
+when = true
+format = "[$output]($style) "
+style = "pink"
+
+[directory]
+style = "lavender"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = " "
+style = "pink"
+format = "[on](gray) [$symbol$branch]($style) "
+
+[git_status]
+style = "amber"
+format = "([\\[$all_status$ahead_behind\\]]($style) )"
+
+[nodejs]
+symbol = " "
+style = "green"
+format = "[via](gray) [$symbol$version]($style) "
+
+[python]
+symbol = " "
+style = "amber"
+format = "[via](gray) [$symbol$version( \\($virtualenv\\))]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "gray"
+format = "[took $duration]($style) "
+
+[character]
+success_symbol = "[󰋑](pink)"
+error_symbol = "[󰋑](coral)"
+vimcmd_symbol = "[󰋑](lavender)"

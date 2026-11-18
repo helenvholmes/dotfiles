@@ -1,14 +1,29 @@
 [user]
 	name = Helen V. Holmes
 	email = 1720093+helenvholmes@users.noreply.github.com
-	signingkey = cv25519/703F7867B8634574
+	# Commit signing key: an SSH key kept in 1Password (item "GitHub signing").
+	# Only the public half is here; 1Password holds the private half and asks for Touch ID.
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZ3uEdVnsWc3hu+QkBTmiA5Tcw++UxQIoPXyn5XDKU3
 [core]
 	excludesfile = ~/.gitignore_global
 [init]
 	defaultBranch = main
 [http]
 	postBuffer = 524288000
+# ── Signing ───────────────────────────────────────────────────────────────
+# Every commit and tag is signed, so GitHub marks them "Verified".
+# SSH keys instead of GPG: no gpg-agent or passphrase prompt that breaks when a commit
+# is made from Cursor or another app with no terminal, which is what went wrong before.
 [commit]
-	gpgsign = false
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	# 1Password's signer: signs inside 1Password, so the private key never touches disk
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	# Which keys count as mine, so `git log --show-signature` can verify locally
+	allowedSignersFile = ~/.config/git/allowed_signers
 [pull]
 	rebase = true

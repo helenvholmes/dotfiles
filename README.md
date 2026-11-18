@@ -5,7 +5,10 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 
 | Path | What it is | Where it goes |
 | --- | --- | --- |
-| `zsh/.zshrc` | Shell config (oh-my-zsh, nvm, PATH) | `~/.zshrc` (symlinked) |
+| `zsh/.zprofile` | PATH and environment: Homebrew, rbenv, fnm, `~/.local/bin`. Also read by GUI apps, so editors and AI tools find the same `node` and `python` | `~/.zprofile` (symlinked) |
+| `zsh/.zshrc` | Interactive shell: completion, history, shortcuts, prompt | `~/.zshrc` (symlinked) |
+| `iterm/Pastel.json` | iTerm profile: dark violet background, pastel cursor, Nerd Font icons | `…/iTerm2/DynamicProfiles/` (symlinked) |
+| `starship/starship.toml` | Prompt theme ("little icons") | `~/.config/starship.toml` (symlinked) |
 | `git/.gitconfig` | Git user config | `~/.gitconfig` (symlinked) |
 | `git/.gitignore_global` | Ignores for every repo (`.DS_Store`, `.env`, …) | `~/.gitignore_global` (symlinked) |
 | `vscode/settings.json` | VS Code user settings | `~/Library/Application Support/Code/User/` (symlinked) |
@@ -16,7 +19,9 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 
 ## Install
 
-Prerequisites: [Homebrew](https://brew.sh), [oh-my-zsh](https://ohmyz.sh) and [nvm](https://github.com/nvm-sh/nvm).
+Prerequisite: [Homebrew](https://brew.sh). The Brewfile brings the rest: [Starship](https://starship.rs) for the prompt, [fnm](https://github.com/Schniz/fnm) for Node (`nvm` still works as a shortcut to it) and two zsh add-ons.
+
+After installing, make the **Pastel** profile iTerm's default: Settings → Profiles → select Pastel → Other Actions → *Set as Default*. It inherits everything from your Default profile and adds the background color and the icon font the prompt needs. Then install Node with `nvm install 22 && nvm alias default 22`.
 
 ```sh
 git clone https://github.com/helenvholmes/dotfiles ~/code/dotfiles
