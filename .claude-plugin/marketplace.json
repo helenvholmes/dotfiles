@@ -1,0 +1,14 @@
+{
+  "name": "dotfiles",
+  "owner": {
+    "name": "Helen V. Holmes"
+  },
+  "description": "Claude mods from my dotfiles",
+  "plugins": [
+    {
+      "name": "pastel",
+      "source": "./claude/mods/pastel",
+      "description": "The dark violet Pastel look from the iTerm profile and Starship prompt, for the whole Claude app"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "pastel",
+  "version": "0.1.0",
+  "description": "Pastel: the dark violet look from the iTerm profile and Starship prompt, for the whole Claude app",
+  "author": {
+    "name": "Helen V. Holmes"
+  }
+}
