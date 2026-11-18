@@ -1,4 +1,8 @@
 tap "homebrew/services"
+# Turso's own taps. On a new Mac, run `brew trust libsql/sqld` first: Homebrew
+# won't install from a third-party tap until you say you trust it.
+tap "libsql/sqld"
+tap "tursodatabase/tap"
 # Cross-platform make
 brew "cmake"
 # SDL2 compatibility layer that uses SDL3 behind the scenes
@@ -9,10 +13,8 @@ brew "ffmpeg"
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Passphrase entry dialog utilizing the Assuan protocol
-brew "pinentry"
-# GNU Privacy Guard (OpenPGP)
-brew "gnupg"
+# Fast Node version manager (stands in for nvm)
+brew "fnm"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Simple zero-configuration command-line HTTP server
@@ -33,30 +35,32 @@ brew "openssl@1.1"
 brew "postgresql@14", restart_service: :changed
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
-# Python version management
-brew "pyenv"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.10"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
-# Cross-platform application and UI framework
-brew "qt@5"
 # Ruby version manager
 brew "rbenv"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Powerful, clean, object-oriented scripting language
-brew "ruby", link: false
 # Safe, concurrent, practical language
 brew "rust"
 # Nodejs-based tool for optimizing SVG vector graphics files
 brew "svgo"
+# Cross-shell prompt (config in starship/starship.toml)
+brew "starship"
+# Python versions, packages and tools (uv python install / uvx)
+brew "uv"
+# Turso CLI (libSQL databases); brings sqld, the local database server, with it
+brew "tursodatabase/tap/turso"
 # Internet file retriever
 brew "wget"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Fish-like autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
 # File system integration
 cask "macfuse"
+# Nerd Font icons only, used by the Starship prompt alongside Monaco
+cask "font-symbols-only-nerd-font"
 # Spotify and iTunes in the menu bar
 cask "spotmenu"
 # Android File Transfer for Linux

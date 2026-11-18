@@ -1,0 +1,61 @@
+{
+  "Profiles": [
+    {
+      "Name": "Pastel",
+      "Guid": "5C1F1E2A-7E3D-4B8A-9F2C-1E1E2A5DCAA5",
+      "Dynamic Profile Parent Name": "Default",
+      "Background Color": {
+        "Red Component": 0.1176,
+        "Green Component": 0.1176,
+        "Blue Component": 0.1647,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Foreground Color": {
+        "Red Component": 0.9098,
+        "Green Component": 0.902,
+        "Blue Component": 0.8745,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Bold Color": {
+        "Red Component": 0.9098,
+        "Green Component": 0.902,
+        "Blue Component": 0.8745,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Cursor Color": {
+        "Red Component": 0.3647,
+        "Green Component": 0.7922,
+        "Blue Component": 0.6471,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Cursor Text Color": {
+        "Red Component": 0.1176,
+        "Green Component": 0.1176,
+        "Blue Component": 0.1647,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Selection Color": {
+        "Red Component": 0.2353,
+        "Green Component": 0.2039,
+        "Blue Component": 0.5373,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Selected Text Color": {
+        "Red Component": 0.9098,
+        "Green Component": 0.902,
+        "Blue Component": 0.8745,
+        "Alpha Component": 1,
+        "Color Space": "sRGB"
+      },
+      "Normal Font": "Monaco 12",
+      "Use Non-ASCII Font": true,
+      "Non Ascii Font": "SymbolsNFM 12"
+    }
+  ]
+}
