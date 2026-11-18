@@ -1,0 +1,56 @@
+{
+	"Starter React Typescript file": {
+		"body": [
+			"interface ${1:Item}Props {",
+			"  /** Prop description. */",
+			"  ${2:propName}?: string;",
+			"}",
+			"",
+			"/** JSDoc description for the item. [Documentation]() */",
+			"export default function ${1:Item}({ ${2:propName} }: ${1:Item}Props) {",
+			"  return <div>{${2:propName}}$0</div>;",
+			"}",
+			"",
+			"${1:Item}.displayName = \"${1:Item}\";"
+		],
+		"description": "Create a new React file",
+		"prefix": "starter"
+	},
+	"Starter React Typescript story file": {
+		"body": [
+			"import type { Meta, StoryObj } from \"@storybook/react\";",
+			"",
+			"import ${1:Item} from \"./${1:Item}\";",
+			"",
+			"const meta = {",
+			"  component: ${1:Item},",
+			"  title: \"${2:Components}/${1:Item}\",",
+			"} satisfies Meta<typeof ${1:Item}>;",
+			"",
+			"export default meta;",
+			"type Story = StoryObj<typeof meta>;",
+			"",
+			"export const Primary: Story = {",
+			"  args: {",
+			"    ${3:propName}: \"${4:string}\",",
+			"  },",
+			"};"
+		],
+		"description": "Create a new storybook file",
+		"prefix": "story"
+	},
+	"React map": {
+		"body": [
+			"{${1:items}.map((${2:item}) => <${3:Key} {...${2:item}} key={${2:item}.${4:id}} />)}"
+		],
+		"description": "Creates a React map",
+		"prefix": "map"
+	},
+	"Create react element": {
+		"body": [
+			"{React.createElement(${1:element}, ${2:props}, $0)}"
+		],
+		"description": "Sets up the create React element",
+		"prefix": "create react element"
+	}
+}

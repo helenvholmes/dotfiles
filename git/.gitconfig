@@ -1,0 +1,14 @@
+[user]
+	name = Helen V. Holmes
+	email = 1720093+helenvholmes@users.noreply.github.com
+	signingkey = cv25519/703F7867B8634574
+[core]
+	excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main
+[http]
+	postBuffer = 524288000
+[commit]
+	gpgsign = false
+[pull]
+	rebase = true
