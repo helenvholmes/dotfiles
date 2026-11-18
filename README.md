@@ -9,8 +9,9 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `zsh/.zshrc` | Interactive shell: completion, history, shortcuts, prompt | `~/.zshrc` (symlinked) |
 | `iterm/Pastel.json` | iTerm profile: dark violet background, pastel cursor, Nerd Font icons | `…/iTerm2/DynamicProfiles/` (symlinked) |
 | `starship/starship.toml` | Prompt theme ("little icons") | `~/.config/starship.toml` (symlinked) |
-| `git/.gitconfig` | Git user config | `~/.gitconfig` (symlinked) |
-| `git/.gitignore_global` | Ignores for every repo (`.DS_Store`, `.env`, …) | `~/.gitignore_global` (symlinked) |
+| `git/.gitconfig` | Git settings: commit signing through 1Password, pull/push defaults, sign-in through `gh` | `~/.gitconfig` (symlinked) |
+| `git/ignore` | Ignores for every repo (`.DS_Store`, `.env`, keys, Claude's local files) | `~/.config/git/ignore` (symlinked) |
+| `git/allowed_signers` | My public signing key, so git can verify my signatures locally | `~/.config/git/allowed_signers` (symlinked) |
 | `vscode/settings.json` | VS Code user settings | `~/Library/Application Support/Code/User/` (symlinked) |
 | `vscode/snippets/` | VS Code user snippets for TS and TSX | `…/Code/User/snippets/` (symlinked) |
 | `vscode/extensions.json` | VS Code extensions I use | installed with `./install.sh --extensions` |

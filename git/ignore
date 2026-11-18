@@ -1,0 +1,15 @@
+# Global ignores: files no repo on this Mac should ever commit.
+# Linked to ~/.config/git/ignore, the location git reads by default.
+
+# macOS folder metadata
+.DS_Store
+
+# Secrets: environment files and private keys
+.env
+.env*.local
+*.pem
+
+# Claude Code's personal, per-machine files (a project's shared .claude/settings.json
+# and CLAUDE.md are still committed)
+**/.claude/settings.local.json
+CLAUDE.local.md

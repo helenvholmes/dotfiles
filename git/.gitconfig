@@ -1,16 +1,19 @@
+# ~/.gitconfig — git settings for every repo on this Mac.
+# Lives in ~/code/dotfiles/git/.gitconfig. Every choice below has its reason above it.
+
 [user]
 	name = Helen V. Holmes
+	# GitHub's no-reply address, so my real email never appears in public commits
 	email = 1720093+helenvholmes@users.noreply.github.com
 	# Commit signing key: an SSH key kept in 1Password (item "GitHub signing").
 	# Only the public half is here; 1Password holds the private half and asks for Touch ID.
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZ3uEdVnsWc3hu+QkBTmiA5Tcw++UxQIoPXyn5XDKU3
-[core]
-	excludesfile = ~/.gitignore_global
+
 [init]
+	# New repos start on `main`, matching GitHub
 	defaultBranch = main
-[http]
-	postBuffer = 524288000
-# ── Signing ───────────────────────────────────────────────────────────────
+
+# ── Signing ─────────────────────────────────────────────────────────────────
 # Every commit and tag is signed, so GitHub marks them "Verified".
 # SSH keys instead of GPG: no gpg-agent or passphrase prompt that breaks when a commit
 # is made from Cursor or another app with no terminal, which is what went wrong before.
@@ -25,5 +28,35 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 	# Which keys count as mine, so `git log --show-signature` can verify locally
 	allowedSignersFile = ~/.config/git/allowed_signers
+
+# ── Pulling, pushing, fetching ──────────────────────────────────────────────
 [pull]
+	# `git pull` puts my commits on top of what's on GitHub instead of adding a merge commit
 	rebase = true
+[rebase]
+	# …and works even with uncommitted changes: they're set aside and put back afterwards
+	autoStash = true
+[push]
+	# The first push of a new branch creates it on GitHub, no `--set-upstream` needed
+	autoSetupRemote = true
+[fetch]
+	# Branches deleted on GitHub (after a PR merges) are removed locally too
+	prune = true
+
+[merge]
+	# Conflicts show the original code as well as both sides, so it's clear what each side changed
+	conflictStyle = zdiff3
+
+# ── Signing in to GitHub ────────────────────────────────────────────────────
+# Pushes over HTTPS sign in through the gh CLI (`gh auth login`), so there's no password
+# or token to manage. The empty `helper =` first clears macOS's default keychain helper,
+# so gh is the only one asked.
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Global ignores live in ~/.config/git/ignore (git's default location, linked from
+# git/ignore in this repo), so no core.excludesfile setting is needed.
