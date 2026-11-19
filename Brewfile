@@ -30,6 +30,8 @@ brew "nmap"
 brew "rbenv"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Search and rewrite code by its structure (used by the ast-grep agent skill)
+brew "ast-grep"
 # Safe, concurrent, practical language
 brew "rust"
 # Nodejs-based tool for optimizing SVG vector graphics files
@@ -77,7 +79,6 @@ cask "font-symbols-only-nerd-font"
 # ── Global npm packages ─────────────────────────────────────────────────────
 # Installed into fnm's default Node (run `brew bundle` from a shell where fnm is set up).
 # pnpm comes from Corepack, which ships with Node: `corepack enable pnpm`.
-npm "@qwen-code/qwen-code"
 npm "npm-check-updates"
 npm "vercel"
 

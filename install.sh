@@ -9,6 +9,7 @@
 #   ./install.sh --work              …plus Brewfile.work (implies --brew)
 #   ./install.sh --personal          …plus Brewfile.personal (implies --brew)
 #   ./install.sh --extensions        also install Cursor extensions
+#   ./install.sh --skills            also reinstall agent skills from ai/skill-lock.json
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
@@ -39,6 +40,7 @@ link git/.gitconfig                   "$HOME/.gitconfig"
 link git/ignore                       "$HOME/.config/git/ignore"
 link git/allowed_signers              "$HOME/.config/git/allowed_signers"
 link ssh/config                       "$HOME/.ssh/config"
+link ai/CLAUDE.md                     "$HOME/.claude/CLAUDE.md"
 link cursor/settings.json             "$CURSOR_USER/settings.json"
 link cursor/keybindings.json          "$CURSOR_USER/keybindings.json"
 link cursor/snippets/typescript.json      "$CURSOR_USER/snippets/typescript.json"
@@ -50,7 +52,7 @@ touch "$HOME/.hushlogin"  # an empty ~/.hushlogin hides "Last login: …" in new
 [ -f "$HOME/.zshrc.local" ] || echo "note: no ~/.zshrc.local yet — put secrets and machine-specific exports there"
 
 # ── What to install ─────────────────────────────────────────────────────────
-brew=false work=false personal=false extensions=false
+brew=false work=false personal=false extensions=false skills=false
 
 ask_yes() {  # ask_yes "Question" default(y/n) → returns 0 for yes
   local reply hint="[y/N]"; [ "$2" = y ] && hint="[Y/n]"
@@ -82,6 +84,7 @@ if [ $# -eq 0 ] && [ -t 0 ]; then
   fi
   echo
   ask_yes "Install Cursor extensions?" n && extensions=true
+  ask_yes "Reinstall agent skills (ai/skill-lock.json)?" n && skills=true
 else
   for arg in "$@"; do
     case "$arg" in
@@ -90,6 +93,7 @@ else
       --work) brew=true; work=true ;;
       --personal) brew=true; personal=true ;;
       --extensions) extensions=true ;;
+      --skills) skills=true ;;
       *) echo "unknown option: $arg (see the top of install.sh)" >&2; exit 1 ;;
     esac
   done
@@ -121,4 +125,15 @@ if $extensions; then
   cursor="$(command -v cursor || echo "/Applications/Cursor.app/Contents/Resources/app/bin/cursor")"
   grep -vE '^[[:space:]]*(#|$)' "$DOTFILES/cursor/extensions.txt" |
     while read -r ext; do "$cursor" --install-extension "$ext"; done
+fi
+
+# ── Agent skills ────────────────────────────────────────────────────────────
+# Reinstalls the skills listed in ai/skill-lock.json with `npx skills`, which needs Node:
+# on a fresh Mac, fnm (from the Brewfile) installs the current LTS first.
+if $skills; then
+  if ! command -v npx >/dev/null && command -v fnm >/dev/null; then
+    fnm install --lts && fnm default lts-latest
+  fi
+  command -v fnm >/dev/null && eval "$(fnm env --shell bash)"
+  zsh -c "source '$DOTFILES/zsh/ai.zsh' && skills-restore"
 fi

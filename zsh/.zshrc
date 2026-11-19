@@ -78,6 +78,11 @@ nvm() {
 #   Run a tool once:      uvx <tool>         e.g. `uvx poetry install` for Poetry projects
 #   Install packages:     uv pip install … inside a project's venv, or `uv add` in a uv project
 
+# ── AI helpers ──────────────────────────────────────────────────────────────
+# Commands for API keys and agent skills (ai-help lists them). Loaded from beside this
+# file: ~/.zshrc is a link, so :A follows it back into the repo's zsh/ folder.
+source "${${(%):-%x}:A:h}/ai.zsh"
+
 # ── Secrets ─────────────────────────────────────────────────────────────────
 # API keys and anything specific to one machine live in ~/.zshrc.local, which is
 # never committed. Loaded near the end so it can override anything above.
