@@ -16,9 +16,9 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `git/ignore` | Ignores for every repo (`.DS_Store`, `.env`, keys, Claude's local files) | `~/.config/git/ignore` (symlinked) |
 | `ssh/config` | SSH settings: use 1Password's agent (keys stay on the machine, never in this repo) | `~/.ssh/config` (symlinked) |
 | `git/allowed_signers` | My public signing key, so git can verify my signatures locally | `~/.config/git/allowed_signers` (symlinked) |
-| `vscode/settings.json` | VS Code user settings | `~/Library/Application Support/Code/User/` (symlinked) |
-| `vscode/snippets/` | VS Code user snippets for TS and TSX | `…/Code/User/snippets/` (symlinked) |
-| `vscode/extensions.json` | VS Code extensions I use | installed with `./install.sh --extensions` |
+| `cursor/settings.json`, `cursor/keybindings.json` | Cursor settings and shortcuts, with a comment on each | `~/Library/Application Support/Cursor/User/` (symlinked) |
+| `cursor/snippets/` | Cursor snippets for TS and TSX; `work/` holds the Storybook ones, linked only on a work Mac | `…/Cursor/User/snippets/` (symlinked) |
+| `cursor/extensions.txt` | Cursor extensions, one per line | installed when `./install.sh` asks, or with `--extensions` |
 | `Brewfile` | What every Mac gets: command-line tools, shared apps, global npm packages, App Store apps | installed by `./install.sh` |
 | `Brewfile.work` / `Brewfile.personal` | Apps for a work Mac or my own Mac | `./install.sh` asks which to add |
 | `bin/adopt-apps` | Hands apps installed by hand over to Homebrew, so `brew bundle` knows about them | run once on an existing Mac |
@@ -36,9 +36,9 @@ cd ~/code/dotfiles
 ./install.sh                       # links the dotfiles, then asks what to install
 ```
 
-The menu asks whether to install Homebrew tools and apps, what kind of Mac this is (personal, work, both, or neither: shared apps only), and whether to install VS Code extensions. To skip the questions, pass flags instead: `--link` (only link), `--brew`, `--work`, `--personal`, `--extensions`.
+The menu asks whether to install Homebrew tools and apps, what kind of Mac this is (personal, work, both, or neither: shared apps only), and whether to install Cursor extensions. To skip the questions, pass flags instead: `--link` (only link), `--brew`, `--work`, `--personal`, `--extensions`.
 
-Any file that's already in the way gets moved to `<file>.backup.<timestamp>` before it's linked, and running the script again is safe. Because everything is symlinked, edits made in place (for example through VS Code's settings UI) show up here as changes to commit.
+Any file that's already in the way gets moved to `<file>.backup.<timestamp>` before it's linked, and running the script again is safe. Because everything is symlinked, edits made in place (for example through Cursor's settings screen) show up here as changes to commit.
 
 To start a Next.js project from the templates:
 
