@@ -8,6 +8,9 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `zsh/.zprofile` | PATH and environment: Homebrew, rbenv, fnm, `~/.local/bin`. Also read by GUI apps, so editors and AI tools find the same `node` and `python` | `~/.zprofile` (symlinked) |
 | `zsh/.zshrc` | Interactive shell: completion, history, shortcuts, prompt | `~/.zshrc` (symlinked) |
 | `iterm/Pastel.json` | iTerm profile: dark violet background, pastel cursor, Nerd Font icons | `…/iTerm2/DynamicProfiles/` (symlinked) |
+| `ai/CLAUDE.md` | Instructions Claude Code follows in every project | `~/.claude/CLAUDE.md` (symlinked) |
+| `ai/skill-lock.json` | The agent skills installed with `npx skills` (mine, Emil Kowalski's, Vercel's) | reinstalled when `./install.sh` asks, or with `--skills` |
+| `zsh/ai.zsh` | Shell helpers for API keys and skills (`ai-help` lists them) | loaded by `.zshrc` |
 | `claude/mods/pastel/` | A Claude mod: the Pastel look (dark violet, pink accent) for the whole Claude app, terminal pane included | installed once with `claude plugin` (see below) |
 | `.claude-plugin/marketplace.json` | Makes this repo a plugin source, so Claude can install the mods in `claude/mods/` | read by `claude plugin` |
 | `starship/starship.toml` | Prompt theme ("little icons") | `~/.config/starship.toml` (symlinked) |
@@ -47,6 +50,14 @@ cp -R ~/code/dotfiles/templates/nextjs/. path/to/project/
 ```
 
 The `.prettierrc` there needs `prettier-plugin-tailwindcss` installed in the project.
+
+## AI helpers
+
+`zsh/ai.zsh` adds a few commands; `ai-help` lists them. The useful ones:
+
+- `ai-keys` shows which API keys the shell has, with only the last 4 characters, to check `~/.zshrc.local` without printing secrets.
+- `skills-ls` lists the skills each agent sees. `skills-add <owner/repo>` installs more and `skills-update` updates them; both copy the new list into `ai/skill-lock.json` to commit. `skills-restore` (or `./install.sh --skills`) reinstalls the lot on a new Mac.
+- `skills-dev` links the skills I'm writing in `~/code/skills` into Claude so edits show up in the next session; `skills-undev` puts the installed versions back.
 
 ## Claude's Pastel look
 
