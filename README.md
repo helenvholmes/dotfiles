@@ -24,32 +24,45 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `cursor/extensions.txt` | Cursor extensions, one per line | installed when `./install.sh` asks, or with `--extensions` |
 | `Brewfile` | What every Mac gets: command-line tools, shared apps, global npm packages, App Store apps | installed by `./install.sh` |
 | `Brewfile.work` / `Brewfile.personal` | Apps for a work Mac or my own Mac | `./install.sh` asks which to add |
+| `Apps.md` | The apps Homebrew can't install, and where to get each | read by hand on a new Mac |
+| `bin/apps-check` | Reports apps, Homebrew packages and skills that the repo doesn't list (or lists but aren't installed) | run any time |
 | `bin/adopt-apps` | Hands apps installed by hand over to Homebrew, so `brew bundle` knows about them | run once on an existing Mac |
-| `templates/nextjs/` | `.gitignore`, `.prettierrc`, `tsconfig.json` and `.vscode/settings.json` for a new Next.js project | copy into the project by hand |
 
 ## Install
 
-Prerequisite: [Homebrew](https://brew.sh). The Brewfile brings the rest: [Starship](https://starship.rs) for the prompt, [fnm](https://github.com/Schniz/fnm) for Node (`nvm` still works as a shortcut to it) and two zsh add-ons.
+On a new Mac, in this order:
 
-After installing, make the **Pastel** profile iTerm's default: Settings → Profiles → select Pastel → Other Actions → *Set as Default*. It inherits everything from your Default profile and adds the background color and the icon font the prompt needs. Then install Node with `nvm install 22 && nvm alias default 22`.
+1. **git**, from Apple's [Command Line Tools](https://developer.apple.com/xcode/resources/) (no need for all of Xcode). Running `git` for the first time offers to install them, or:
 
-```sh
-git clone https://github.com/helenvholmes/dotfiles ~/code/dotfiles
-cd ~/code/dotfiles
-./install.sh                       # links the dotfiles, then asks what to install
-```
+   ```sh
+   xcode-select --install
+   ```
 
-The menu asks whether to install Homebrew tools and apps, what kind of Mac this is (personal, work, both, or neither: shared apps only), and whether to install Cursor extensions. To skip the questions, pass flags instead: `--link` (only link), `--brew`, `--work`, `--personal`, `--extensions`.
+2. **[Homebrew](https://brew.sh)**, which needs those tools. The command from its site:
+
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+3. **This repo**, then the install script:
+
+   ```sh
+   git clone https://github.com/helenvholmes/dotfiles ~/code/dotfiles
+   cd ~/code/dotfiles
+   ./install.sh                       # links the dotfiles, then asks what to install
+   ```
+
+   The Brewfile brings the rest: [Starship](https://starship.rs) for the prompt, [fnm](https://github.com/Schniz/fnm) for Node (`nvm` still works as a shortcut to it), the zsh add-ons and the apps.
+
+4. **By hand afterwards:**
+   - Install Node: `nvm install 22 && nvm alias default 22`.
+   - Make **Pastel** iTerm's default profile: Settings → Profiles → select Pastel → Other Actions → *Set as Default*. It inherits everything from your Default profile and adds the colors and the icon font the prompt needs.
+   - Install Claude's Pastel look (see [below](#claudes-pastel-look)).
+   - Reinstall the apps Homebrew can't: [Apps.md](Apps.md).
+
+The menu asks whether to install Homebrew tools and apps, what kind of Mac this is (personal, work, both, or neither: shared apps only), whether to install Cursor extensions, and whether to reinstall agent skills. To skip the questions, pass flags instead: `--link` (only link), `--brew`, `--work`, `--personal`, `--extensions`, `--skills`.
 
 Any file that's already in the way gets moved to `<file>.backup.<timestamp>` before it's linked, and running the script again is safe. Because everything is symlinked, edits made in place (for example through Cursor's settings screen) show up here as changes to commit.
-
-To start a Next.js project from the templates:
-
-```sh
-cp -R ~/code/dotfiles/templates/nextjs/. path/to/project/
-```
-
-The `.prettierrc` there needs `prettier-plugin-tailwindcss` installed in the project.
 
 ## AI helpers
 
@@ -80,6 +93,8 @@ export OPENAI_API_KEY="..."
 ```
 
 ## Updating the Brewfiles
+
+Run `bin/apps-check` now and then. It lists any app, Homebrew package or agent skill that this Mac has and the repo doesn't (or the reverse), and changes nothing.
 
 Add new things by hand to whichever Brewfile fits (`brew bundle dump` would merge all three into one). To see what's installed but not listed anywhere:
 

@@ -9,9 +9,7 @@
 			"/** JSDoc description for the item. [Documentation]() */",
 			"export default function ${1:Item}({ ${2:propName} }: ${1:Item}Props) {",
 			"  return <div>{${2:propName}}$0</div>;",
-			"}",
-			"",
-			"${1:Item}.displayName = \"${1:Item}\";"
+			"}"
 		],
 		"description": "Create a new React file",
 		"prefix": "starter"

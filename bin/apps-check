@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Reports where this Mac and the repo disagree, so nothing gets forgotten. Changes nothing.
+#
+#   bin/apps-check
+#
+# 1. Apps in /Applications or ~/Applications that no Brewfile or Apps.md covers
+# 2. Homebrew packages installed but in no Brewfile, and Brewfile entries not installed
+# 3. Agent skills installed but not in ai/skill-lock.json (or the reverse)
+set -uo pipefail
+
+DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
+BREWFILES=("$DOTFILES/Brewfile" "$DOTFILES/Brewfile.work" "$DOTFILES/Brewfile.personal")
+problems=0
+
+say() { printf '%s\n' "$*"; }
+heading() { printf '\n── %s\n' "$*"; }
+
+# ── 1. Apps ─────────────────────────────────────────────────────────────────
+heading "Apps no Brewfile or Apps.md covers"
+
+# Apps Homebrew manages, by the name they have in Applications. A cask installed by a
+# package installer (Zoom) names its app only in its uninstall steps, so read those too.
+cask_apps="$(brew info --cask --installed --json=v2 2>/dev/null | python3 -c '
+import json, sys
+for c in json.load(sys.stdin)["casks"]:
+    for a in c.get("artifacts", []):
+        for app in a.get("app", []):
+            name = app if isinstance(app, str) else app.get("target", "")
+            print(name.split("/")[-1].removesuffix(".app"))
+        for step in a.get("uninstall", []):
+            if isinstance(step, dict):
+                for path in step.get("delete", []):
+                    if str(path).startswith("/Applications/") and str(path).endswith(".app"):
+                        print(path.split("/")[-1].removesuffix(".app"))
+')"
+# App Store apps listed in the Brewfiles
+mas_apps="$(cat "${BREWFILES[@]}" | sed -n 's/^mas "\([^"]*\)".*/\1/p')"
+# Apps listed by hand: the first column of Apps.md's table
+listed_apps="$(sed -n 's/^| \([^|]*[^ |]\) *|.*/\1/p' "$DOTFILES/Apps.md" | grep -vxE 'App|---')"
+
+found=0
+for dir in /Applications "$HOME/Applications"; do
+  for path in "$dir"/*.app; do
+    [ -e "$path" ] || continue
+    name="$(basename "$path" .app)"
+    case "$name" in Safari|"Claude Code URL Handler") continue ;; esac
+    # Steam makes its own game shortcuts; Apps.md covers Steam as a whole
+    if [ "$dir" = "$HOME/Applications" ] && grep -qs steam "$path"/Contents/MacOS/* 2>/dev/null; then
+      continue
+    fi
+    for known in "$cask_apps" "$mas_apps" "$listed_apps"; do
+      grep -qxF "$name" <<<"$known" && continue 2
+    done
+    say "  $name  (${path/#$HOME/~})"
+    found=1
+  done
+done
+if [ $found = 0 ]; then say "  none"; else problems=1; say "  → add each to a Brewfile (cask or mas) or to Apps.md, or remove it"; fi
+
+# ── 2. Homebrew ─────────────────────────────────────────────────────────────
+heading "Homebrew packages installed but in no Brewfile"
+# `brew bundle cleanup` without --force only lists; the three Brewfiles are read as one
+# npm and corepack ship with Node, so they never count as extra
+extra="$(cat "${BREWFILES[@]}" | brew bundle cleanup --file=- 2>/dev/null | grep -vE '^(Would|Run `brew bundle cleanup)' | grep -vxE 'corepack|npm' | sed 's/^/  /')"
+if [ -n "$extra" ]; then say "$extra"; problems=1; else say "  none"; fi
+
+heading "Brewfile entries not installed"
+missing="$(cat "${BREWFILES[@]}" | brew bundle check --file=- --verbose --no-upgrade 2>/dev/null | grep -E '^→' | sed 's/^→ /  /')"
+if [ -n "$missing" ]; then say "$missing"; say "  (fine on a Mac that isn't meant to have the work or personal apps)"; problems=1; else say "  none"; fi
+
+# ── 3. Skills ───────────────────────────────────────────────────────────────
+heading "Agent skills vs ai/skill-lock.json"
+skills_diff="$(python3 - "$HOME/.agents/.skill-lock.json" "$DOTFILES/ai/skill-lock.json" <<'PY'
+import json, sys
+try:
+    installed = set(json.load(open(sys.argv[1]))["skills"])
+except FileNotFoundError:
+    installed = set()
+saved = set(json.load(open(sys.argv[2]))["skills"])
+for s in sorted(installed - saved): print(f"  installed, not saved: {s}  (run skills-update or copy the lock)")
+for s in sorted(saved - installed): print(f"  saved, not installed: {s}  (run skills-restore)")
+PY
+)"
+if [ -n "$skills_diff" ]; then say "$skills_diff"; problems=1; else say "  in step"; fi
+
+echo
+[ $problems = 0 ] && echo "Everything matches." || echo "Some things above need a decision."
+exit $problems
