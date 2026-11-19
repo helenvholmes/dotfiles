@@ -88,9 +88,18 @@ nvm() {
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 # Starship draws the prompt ("little icons" theme, ~/.config/starship.toml). It's a single
 # fast binary updated by `brew upgrade`, so nothing nags to update itself on startup.
-# The Claude app's terminal can't load the Nerd Font the icons come from, so there it
-# uses starship-plain.toml: the same prompt with ordinary Unicode symbols (✿ ♥ ⎇ ⬢).
-[[ "$TERM_PROGRAM" == claude-desktop ]] && export STARSHIP_CONFIG="$HOME/.config/starship-plain.toml"
+# The Claude app's terminal can't load the Nerd Font the icons come from, and its
+# named colors can't be changed, so there it uses starship-plain.toml: the same prompt
+# with ordinary Unicode symbols (✿ ♥ ⎇ ⬢) and fixed Pastel colors. That file's palette
+# is the dark one; in light mode a copy with the light palette is made in ~/.cache.
+if [[ "$TERM_PROGRAM" == claude-desktop ]]; then
+  export STARSHIP_CONFIG="$HOME/.config/starship-plain.toml"
+  if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" != Dark ]]; then
+    mkdir -p "$HOME/.cache/starship"
+    sed 's/^palette = "pastel_dark"/palette = "pastel_light"/' "$STARSHIP_CONFIG" > "$HOME/.cache/starship/plain-light.toml"
+    export STARSHIP_CONFIG="$HOME/.cache/starship/plain-light.toml"
+  fi
+fi
 eval "$(starship init zsh)"
 # Colors commands as you type, red if the command doesn't exist. Must load last:
 # it wraps the keyboard handlers everything above has already set up.

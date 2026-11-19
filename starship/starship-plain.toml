@@ -11,15 +11,30 @@ $character"""
 
 add_newline = true
 
-palette = "pastel"
+palette = "pastel_dark"
 
-[palettes.pastel]
+# Fixed colors, unlike starship.toml: the Claude app's terminal has its own built-in
+# named colors that nothing can change, so this file says exactly which shades to use.
+# ~/.zshrc swaps in pastel_light when macOS is in light mode as the tab opens; a tab
+# opened before a mode switch keeps its colors until `exec zsh -l`.
+[palettes.pastel_dark]
 pink = "#ED93B1"
 lavender = "#AFA9EC"
 gray = "#888780"
 amber = "#EF9F27"
 green = "#97C459"
 coral = "#F09595"
+
+# The iTerm Pastel profile's light-mode colors, except pink: the Claude terminal darkens
+# any text color under about 4.5:1 contrast (so iTerm's soft #EF7EA4 turned mauve here).
+# #D31A58 is the same hue, just dark enough to pass, so it's drawn exactly.
+[palettes.pastel_light]
+pink = "#D31A58"
+lavender = "#534AB7"
+gray = "#686673"
+amber = "#854F0B"
+green = "#3B6D11"
+coral = "#A32D2D"
 
 # The flower at the start of the line
 [custom.flower]

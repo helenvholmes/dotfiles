@@ -12,13 +12,17 @@ add_newline = true
 
 palette = "pastel"
 
+# Named terminal colors, not fixed hex values, so each terminal supplies its own light
+# and dark versions and the prompt follows macOS light/dark mode. iTerm's Pastel profile
+# (iterm/Pastel.json) defines them as the Pastel colors; Cursor and the Claude app use
+# their themes' versions. ("purple" is Starship's name for magenta.)
 [palettes.pastel]
-pink = "#ED93B1"
-lavender = "#AFA9EC"
-gray = "#888780"
-amber = "#EF9F27"
-green = "#97C459"
-coral = "#F09595"
+pink = "purple"
+lavender = "blue"
+gray = "bright-black"
+amber = "yellow"
+green = "green"
+coral = "red"
 
 # The flower at the start of the line
 [custom.flower]
