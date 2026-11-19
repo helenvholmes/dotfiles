@@ -16,29 +16,6 @@
 		"description": "Create a new React file",
 		"prefix": "starter"
 	},
-	"Starter React Typescript story file": {
-		"body": [
-			"import type { Meta, StoryObj } from \"@storybook/react\";",
-			"",
-			"import ${1:Item} from \"./${1:Item}\";",
-			"",
-			"const meta = {",
-			"  component: ${1:Item},",
-			"  title: \"${2:Components}/${1:Item}\",",
-			"} satisfies Meta<typeof ${1:Item}>;",
-			"",
-			"export default meta;",
-			"type Story = StoryObj<typeof meta>;",
-			"",
-			"export const Primary: Story = {",
-			"  args: {",
-			"    ${3:propName}: \"${4:string}\",",
-			"  },",
-			"};"
-		],
-		"description": "Create a new storybook file",
-		"prefix": "story"
-	},
 	"React map": {
 		"body": [
 			"{${1:items}.map((${2:item}) => <${3:Key} {...${2:item}} key={${2:item}.${4:id}} />)}"

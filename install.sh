@@ -8,11 +8,11 @@
 #   ./install.sh --brew              also install Brewfile (tools and shared apps)
 #   ./install.sh --work              …plus Brewfile.work (implies --brew)
 #   ./install.sh --personal          …plus Brewfile.personal (implies --brew)
-#   ./install.sh --extensions        also install VS Code extensions
+#   ./install.sh --extensions        also install Cursor extensions
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
-VSCODE_USER="$HOME/Library/Application Support/Code/User"
+CURSOR_USER="$HOME/Library/Application Support/Cursor/User"
 STAMP="$(date +%Y%m%d%H%M%S)"
 
 link() {
@@ -39,9 +39,10 @@ link git/.gitconfig                   "$HOME/.gitconfig"
 link git/ignore                       "$HOME/.config/git/ignore"
 link git/allowed_signers              "$HOME/.config/git/allowed_signers"
 link ssh/config                       "$HOME/.ssh/config"
-link vscode/settings.json             "$VSCODE_USER/settings.json"
-link vscode/snippets/typescript.json      "$VSCODE_USER/snippets/typescript.json"
-link vscode/snippets/typescriptreact.json "$VSCODE_USER/snippets/typescriptreact.json"
+link cursor/settings.json             "$CURSOR_USER/settings.json"
+link cursor/keybindings.json          "$CURSOR_USER/keybindings.json"
+link cursor/snippets/typescript.json      "$CURSOR_USER/snippets/typescript.json"
+link cursor/snippets/typescriptreact.json "$CURSOR_USER/snippets/typescriptreact.json"
 
 command -v starship >/dev/null || echo "note: run ./install.sh --brew for starship, fnm and the zsh add-ons"
 touch "$HOME/.hushlogin"  # an empty ~/.hushlogin hides "Last login: …" in new terminal windows
@@ -80,7 +81,7 @@ if [ $# -eq 0 ] && [ -t 0 ]; then
     done
   fi
   echo
-  ask_yes "Install VS Code extensions?" n && extensions=true
+  ask_yes "Install Cursor extensions?" n && extensions=true
 else
   for arg in "$@"; do
     case "$arg" in
@@ -92,6 +93,12 @@ else
       *) echo "unknown option: $arg (see the top of install.sh)" >&2; exit 1 ;;
     esac
   done
+fi
+
+# ── Work-only setup ─────────────────────────────────────────────────────────
+# Storybook snippets are for work projects, so only a work Mac gets them
+if $work; then
+  link cursor/snippets/work/storybook.code-snippets "$CURSOR_USER/snippets/storybook.code-snippets"
 fi
 
 # ── Homebrew ────────────────────────────────────────────────────────────────
@@ -109,9 +116,9 @@ if $brew; then
   command -v corepack >/dev/null && corepack enable pnpm  # pnpm through Corepack, see Brewfile
 fi
 
-# ── VS Code extensions ──────────────────────────────────────────────────────
+# ── Cursor extensions ───────────────────────────────────────────────────────
 if $extensions; then
-  code="$(command -v code || echo "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")"
-  sed -n 's/^ *"\([^"]*\.[^"]*\)",\{0,1\}$/\1/p' "$DOTFILES/vscode/extensions.json" |
-    while read -r ext; do "$code" --install-extension "$ext"; done
+  cursor="$(command -v cursor || echo "/Applications/Cursor.app/Contents/Resources/app/bin/cursor")"
+  grep -vE '^[[:space:]]*(#|$)' "$DOTFILES/cursor/extensions.txt" |
+    while read -r ext; do "$cursor" --install-extension "$ext"; done
 fi

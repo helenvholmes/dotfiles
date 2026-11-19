@@ -1,0 +1,9 @@
+// Cursor keyboard shortcuts. Lives in ~/code/dotfiles/cursor/keybindings.json, linked to
+// ~/Library/Application Support/Cursor/User/keybindings.json.
+[
+  // ⌘I opens the agent (Composer in Agent mode) rather than inline edit
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
+  }
+]

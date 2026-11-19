@@ -1,0 +1,19 @@
+# Cursor extensions, one ID per line. `./install.sh --extensions` installs them.
+# Lines starting with # are notes.
+
+# Formatting and linting
+esbenp.prettier-vscode
+dbaeumer.vscode-eslint
+# Tailwind class autocomplete and hover previews (book-box, portfolio, steady…)
+bradlc.vscode-tailwindcss
+# Readable TypeScript errors
+yoavbls.pretty-ts-errors
+# Who last changed this line, in the status bar
+waderyan.gitblame
+# Vim keys
+vscodevim.vim
+# Themes: Shades of Purple for dark mode; GitHub's themes as alternatives
+ahmadawais.shades-of-purple
+github.github-vscode-theme
+# Cursor's own SSH remote
+anysphere.remote-ssh

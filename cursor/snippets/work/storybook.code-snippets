@@ -1,0 +1,28 @@
+// Work-only snippets: linked into Cursor by ./install.sh on a Work (or Both) Mac.
+// A .code-snippets file can hold snippets for any language; "scope" says which.
+{
+	"Storybook story file": {
+		"scope": "typescriptreact",
+		"prefix": "story",
+		"description": "A Storybook story file (CSF 3) for a component; pick the framework package your project uses",
+		"body": [
+			"import type { Meta, StoryObj } from \"${1|@storybook/react,@storybook/nextjs,@storybook/nextjs-vite,@storybook/react-vite|}\";",
+			"",
+			"import ${2:Item} from \"./${2:Item}\";",
+			"",
+			"const meta = {",
+			"  component: ${2:Item},",
+			"  title: \"${3:Components}/${2:Item}\",",
+			"} satisfies Meta<typeof ${2:Item}>;",
+			"",
+			"export default meta;",
+			"type Story = StoryObj<typeof meta>;",
+			"",
+			"export const Primary: Story = {",
+			"  args: {",
+			"    ${4:propName}: \"${5:string}\",",
+			"  },",
+			"};"
+		]
+	}
+}

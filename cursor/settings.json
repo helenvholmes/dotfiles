@@ -1,0 +1,30 @@
+// Cursor user settings. Lives in ~/code/dotfiles/cursor/settings.json, linked to
+// ~/Library/Application Support/Cursor/User/settings.json, so changes made in Cursor's
+// settings screen land here too. Every choice has its reason above it.
+{
+  // ── Look ──────────────────────────────────────────────────────────────────
+  // Follow macOS light/dark mode. With this on, Cursor ignores workbench.colorTheme
+  // and uses the two preferred themes below instead.
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredLightColorTheme": "Cursor Light",
+  // Shades of Purple matches the Pastel look in iTerm and the Claude app
+  "workbench.preferredDarkColorTheme": "Shades of Purple",
+  // Everything one step larger than default
+  "window.zoomLevel": 1,
+  // Wrap long lines at the ruler column instead of scrolling sideways
+  "editor.wordWrap": "wordWrapColumn",
+
+  // ── Formatting ────────────────────────────────────────────────────────────
+  // Prettier formats every language it knows, on save and on paste, so code always
+  // matches the project's .prettierrc without thinking about it
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
+  // ── Behaviour ─────────────────────────────────────────────────────────────
+  // Links open in Firefox rather than the system default browser
+  "workbench.externalBrowser": "firefox",
+  // A message sent while the agent is working steers the current run instead of
+  // waiting in a queue for the next one
+  "cursor.composer.queueManualSendBehavior2": "steer"
+}
