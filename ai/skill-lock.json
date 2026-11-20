@@ -238,6 +238,49 @@
       "pluginName": "mattpocock-skills",
       "installedAt": "2026-11-20T16:48:03.589Z",
       "updatedAt": "2026-11-20T16:48:03.589Z"
+    },
+    "grill-with-docs": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "skillPath": "skills/engineering/grill-with-docs/SKILL.md",
+      "skillFolderHash": "eedaf2562c83155115e9c649fa3ecaac2e10e81d",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-11-20T16:54:33.162Z",
+      "updatedAt": "2026-11-20T16:54:59.998Z"
+    },
+    "wizard": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "skillPath": "skills/engineering/wizard/SKILL.md",
+      "skillFolderHash": "e396d3ba97c723a78ffd350fb14a3c409137b306",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-11-20T16:54:33.163Z",
+      "updatedAt": "2026-11-20T16:55:00.002Z"
+    },
+    "writing-for-agents": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "skillPath": "skills/productivity/writing-for-agents/SKILL.md",
+      "skillFolderHash": "ad2925850efb8973a72d2e666f7a975f9a2d4a9b",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-11-20T16:54:33.164Z",
+      "updatedAt": "2026-11-20T16:55:00.002Z"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "skillFolderHash": "343db72180d05814949fef7d46be96b5c6ee86b3",
+      "installedAt": "2026-11-20T16:54:35.509Z",
+      "updatedAt": "2026-11-20T16:55:02.138Z"
     }
   },
   "dismissed": {
