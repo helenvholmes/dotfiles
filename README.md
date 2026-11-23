@@ -9,6 +9,7 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `zsh/.zshrc` | Interactive shell: completion, history, shortcuts, prompt | `~/.zshrc` (symlinked) |
 | `iterm/Pastel.json` | iTerm profile: dark violet background, pastel cursor, Nerd Font icons | `…/iTerm2/DynamicProfiles/` (symlinked) |
 | `ai/CLAUDE.md` | Instructions Claude Code follows in every project | `~/.claude/CLAUDE.md` (symlinked) |
+| `ai/settings.json` | Claude Code user settings: permissions, hooks, status line, plugins, and no Claude attribution on commits or PRs | `~/.claude/settings.json` (symlinked) |
 | `ai/skill-lock.json` | The agent skills installed with `npx skills` (mine, Emil Kowalski's, Vercel's) | reinstalled when `./install.sh` asks, or with `--skills` |
 | `zsh/ai.zsh` | Shell helpers for API keys and skills (`ai-help` lists them) | loaded by `.zshrc` |
 | `claude/mods/pastel/` | A Claude mod: the Pastel look (dark violet, pink accent) for the whole Claude app, terminal pane included | installed once with `claude plugin` (see below) |
