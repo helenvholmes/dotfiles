@@ -11,6 +11,7 @@ Stuff that's worth shuttling from computer to computer, lest I forget
 | `ai/CLAUDE.md` | Instructions Claude Code follows in every project | `~/.claude/CLAUDE.md` (symlinked) |
 | `ai/settings.json` | Claude Code user settings: permissions, hooks, status line, plugins, and no Claude attribution on commits or PRs | `~/.claude/settings.json` (symlinked) |
 | `ai/skill-lock.json` | The agent skills installed with `npx skills` (mine, Emil Kowalski's, Vercel's) | reinstalled when `./install.sh` asks, or with `--skills` |
+| `launchd/com.helen.skills-update.plist` | A LaunchAgent that runs `npx skills update -g -y` every day at 9:00 (on wake if the Mac was asleep), logging to `/tmp/skills-update.log` | `~/Library/LaunchAgents/` (copied and loaded; run `./install.sh` again after editing) |
 | `zsh/ai.zsh` | Shell helpers for API keys and skills (`ai-help` lists them) | loaded by `.zshrc` |
 | `claude/mods/pastel/` | A Claude mod: the Pastel look (dark violet, pink accent) for the whole Claude app, terminal pane included | installed once with `claude plugin` (see below) |
 | `.claude-plugin/marketplace.json` | Makes this repo a plugin source, so Claude can install the mods in `claude/mods/` | read by `claude plugin` |
@@ -70,7 +71,7 @@ Any file that's already in the way gets moved to `<file>.backup.<timestamp>` bef
 `zsh/ai.zsh` adds a few commands; `ai-help` lists them. The useful ones:
 
 - `ai-keys` shows which API keys the shell has, with only the last 4 characters, to check `~/.zshrc.local` without printing secrets.
-- `skills-ls` lists the skills each agent sees. `skills-add <owner/repo>` installs more and `skills-update` updates them; both copy the new list into `ai/skill-lock.json` to commit. `skills-restore` (or `./install.sh --skills`) reinstalls the lot on a new Mac.
+- `skills-ls` lists the skills each agent sees. `skills-add <owner/repo>` installs more and `skills-update` updates them; both copy the new list into `ai/skill-lock.json` to commit. `skills-restore` (or `./install.sh --skills`) reinstalls the lot on a new Mac. A LaunchAgent also updates them daily without touching `ai/skill-lock.json`; `bin/apps-check` shows if the list has drifted.
 - `skills-dev` links the skills I'm writing in `~/code/skills` into Claude so edits show up in the next session; `skills-undev` puts the installed versions back.
 
 ## Claude's Pastel look

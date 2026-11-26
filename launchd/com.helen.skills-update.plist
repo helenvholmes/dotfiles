@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Updates every global agent skill (`npx skills update -g -y`) once a day at 9:00.
+  If the Mac is asleep then, it runs on wake. Output goes to /tmp/skills-update.log.
+  install.sh copies this into ~/Library/LaunchAgents (launchd doesn't reliably load
+  symlinked agents), replacing /Users/helen with the current $HOME, and loads it.
+-->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.helen.skills-update</string>
+  <key>ProgramArguments</key><array>
+    <string>/Users/helen/.local/share/fnm/aliases/default/bin/npx</string>
+    <string>-y</string><string>skills</string><string>update</string><string>-g</string><string>-y</string>
+  </array>
+  <key>EnvironmentVariables</key><dict>
+    <key>PATH</key><string>/Users/helen/.local/share/fnm/aliases/default/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>9</integer><key>Minute</key><integer>0</integer></dict>
+  <key>StandardOutPath</key><string>/tmp/skills-update.log</string>
+  <key>StandardErrorPath</key><string>/tmp/skills-update.log</string>
+</dict></plist>

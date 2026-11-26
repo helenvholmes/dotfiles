@@ -47,6 +47,19 @@ link cursor/keybindings.json          "$CURSOR_USER/keybindings.json"
 link cursor/snippets/typescript.json      "$CURSOR_USER/snippets/typescript.json"
 link cursor/snippets/typescriptreact.json "$CURSOR_USER/snippets/typescriptreact.json"
 
+# LaunchAgents are copied, not linked: launchd doesn't reliably load symlinked agents.
+# The plists name /Users/helen, so swap in this Mac's $HOME. Reloading makes edits apply.
+install_agent() {
+  local name="$1" dest="$HOME/Library/LaunchAgents/$1"
+  mkdir -p "$(dirname "$dest")"
+  sed "s|/Users/helen|$HOME|g" "$DOTFILES/launchd/$name" > "$dest"
+  launchctl bootout "gui/$(id -u)" "$dest" 2>/dev/null || true
+  launchctl bootstrap "gui/$(id -u)" "$dest"
+  echo "loaded          $dest"
+}
+
+install_agent com.helen.skills-update.plist  # npx skills update -g -y, daily at 9:00
+
 command -v starship >/dev/null || echo "note: run ./install.sh --brew for starship, fnm and the zsh add-ons"
 touch "$HOME/.hushlogin"  # an empty ~/.hushlogin hides "Last login: …" in new terminal windows
 
