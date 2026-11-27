@@ -10,7 +10,9 @@ When a session starts on an auto-generated branch (a random name like
 what the work is, and before the first commit is pushed or a pull request is
 opened:
 
-    git branch -m claude/<descriptive-name>
+    git branch -m <descriptive-name>
 
-Keep the `claude/` prefix. If the old branch was already pushed, push the new name
-and delete the old one on the remote.
+Never prefix branch names with `claude/` or anything else: drop the prefix when
+renaming. If the old branch was already pushed, push the new name and delete the
+old one on the remote. Don't rename a branch with an open pull request through
+GitHub's rename API: it closes the pull request. Rename before opening one.
